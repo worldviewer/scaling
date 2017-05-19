@@ -20,25 +20,57 @@ Of course, data also flows the other way -- like when a user creates a password,
 
 A diagram is helpful here:
 
+
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/mvc.jpg" />
 </p>
 
+
 The key word here is _monolithic_ because the user's computer -- the "client" -- is not really doing a whole lot, and most of the work is happening on servers which are to some extent dedicated to your site.
 
-It's important to emphasize that these servers require _devops_ technicians who have a deep understanding of how to fix them when they break.  A devops engineer is not necessarily a developer; those developers who posess the requisite devops knowledge to untangle a devops mess -- of course, under pressure of the site being down -- are truthfully a rare breed, and as I will argue, increasingly unnecessary.
+It's important to emphasize that these servers require _devops_ technicians (devops = "Development and Operations") who have a deep understanding of how to fix them when they break.  A devops engineer is not necessarily a developer; those developers who posess the requisite devops knowledge to untangle a devops mess -- of course, under pressure of the site being down -- are truthfully a rare breed, and as I will argue, increasingly unnecessary.
 
 To illustrate in a really vague manner the type of situation we have with "systems" and "code" specialists, here is another diagram:
+
 
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/fullstack-venn-diagram.jpg" />
 </p>
 
-### Infrastructure as a Service (aka "Virtual Machines")
 
+### The Evolution of "Cloud" Deployments
 
+#### Infrastructure as a Service (IaaS) aka Virtual Machines
 
-### The Platform as a Service
+```
+"IaaS - Infrastructure as a Service is one of the big three models of cloud computing and operates by providing virtualized hardware as a resource. This means that there is no single server or other piece of hardware that does the required work. Requests are filled using parts of actual hardware across a number of networks." (_AWS Lambda_ by Darryl Barton)
+```
+
+- Best example: Amazon Web Services (AWS)
+- Can be a lot of work to setup, maintain and debug due to high complexity
+- Was created before the introduction of the auto-scaling concept:
+
+```
+"Amazon Web Services launched the Amazon Elastic Compute Cloud (EC2) service in August 2006, that allowed developers to programmatically create and terminate instances (machines). At the time of initial launch, AWS did not offer autoscaling, but the ability to programmatically create and terminate instances gave developers the flexibility to write their own code for autoscaling."_ (wikipedia)
+```
+
+#### Platform as a Service (PaaS)
+
+```
+"PaaS - Platform as a Service provides hardware and software to users so that they don't have to maintain the cumbersome hardware infrastructure themselves in order to develop new applications." (_AWS Lambda_ by Darryl Barton)
+```
+
+- Best example: Heroku
+- Easier to setup and use, manages most of the hard stuff for you
+- Like IaaS, didn't start out with auto-scaling, but has evolved into it
+- Pre-packaged configurations, reducing complexity
+- Can be more expensive than IaaS
+
+#### Serverless
+
+```
+Serverless - 
+```
 
 ### The Content Deliver Network (CDN)
 
