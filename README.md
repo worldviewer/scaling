@@ -134,6 +134,10 @@ Something on your page is slow again, and it seems to happen when new data appea
 
 You've got a blocking thread.
 
+> "An example of synchronous, blocking operations is how some web servers like ones in Java or PHP handle IO or network requests. If your code reads from a file or the database, your code "blocks" everything after it from executing. In that period, your machine is holding onto memory and processing time for a thread that isn't doing anything.
+
+> In order to cater other requests while that thread has stalled depends on your software. What most server software do is spawn more threads to cater the additional requests. This requires more memory consumed and more processing." (http://stackoverflow.com/questions/10570246/what-is-non-blocking-or-asynchronous-i-o-in-node-js)
+
 Your backend I/O accesses need to be asynchronous, non-blocking.  What that means is that when you make a request to your (unavoidably slow) disk, your server does not sit there and wait for the response.  It instead simply registers a callback in a queue of asynchronous callbacks.
 
 <p align="center">
@@ -158,4 +162,23 @@ new Promise((resolve, reject) => {
 
 ### CPU / Memory Usage Really High
 
-Your site is slow again.  This time, 
+Your site is slow again.  This time, you can tell that your server is pegged.  What do you do?
+
+You're starting to enter dangerous territory at this point known as "operations" ("devops").  The risk you face is that the complexity of your system is about to drastically increase.  You should do everything you can to avoid that: Put simply, you should buy a better server.  Don't scale horizontally until you absolutely have to.
+
+<p align="center">
+        <img src="https://github.com/worldviewer/scaling/blob/master/img/horizontal-vs-vertical-scaling.jpg" />
+</p>
+
+Horizontal scaling is complex and expensive.  To make it work, all of your application servers must be _stateless_.  In other words, every single request is like a blank slate, because there's no real guarantee that the same machine handled the last client interaction.  All of your state is going to have to exist in either your database or your cache.
+
+Making matters worse, you're now going to need load balancers to evenly distribute the incoming requests.  All of this added complexity creates more failure points.  Things are going to start breaking.
+
+<p align="center">
+        <img src="https://github.com/worldviewer/scaling/blob/master/img/load-balancing.jpg" />
+</p>
+
+> "Your centralized load balancer secretly hates you. You just haven't realized it yet ...
+
+> Lets rip off the band aid: It might work well enough for brochureware, but for web-based applications, centralized load balancing is just a dumb idea. It started out as a hack to make a bunch of servers look like one server; a workaround for the fact that HTTP and the web wasn't designed for modern applications. It's an unnecessary middleman and a bottleneck. It forces you toward certain [structures] that are not suitable for the modern web. It doesn't like you, and it doesn't like your friends." (http://abnorman.com/rantings/2014/7/28/unbalanced)
+
