@@ -136,6 +136,10 @@ You've got a blocking thread.
 
 Your backend I/O accesses need to be asynchronous, non-blocking.  What that means is that when you make a request to your (unavoidably slow) disk, your server does not sit there and wait for the response.  It instead simply registers a callback in a queue of asynchronous callbacks.
 
+<p align="center">
+        <img src="https://github.com/worldviewer/scaling/blob/master/img/non-blocking.jpg" />
+</p>
+
 This is a bit like saying, _"We're working on that, you go and do your thing, and I'll get back to you when the data is ready."_
 
 Node.js comes with this ability baked in.  All network and disk accesses are today handled with what are called promises ...
@@ -154,3 +158,4 @@ new Promise((resolve, reject) => {
 
 ### CPU / Memory Usage Really High
 
+Your site is slow again.  This time, 
