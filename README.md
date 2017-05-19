@@ -78,6 +78,7 @@ There is one more acronym you really need to know ...
     <img src="https://github.com/worldviewer/scaling/blob/master/img/cdn.png" />
 </p>
 
+- Serving assets from your own server (left) vs serving assets from a CDN (right)
 - Good at shoveling data (static content like code and images)
 - Tons of locations, globally accessible
 - Faster than AWS
@@ -89,7 +90,67 @@ Now, it's one thing to say, _"Hey, look at this new shiny thing. Isn't it pretty
 
 We must also take the time to understand: _What are the risks, or downsides, to adopting this new technology?_
 
-This is where Haseeb's explanation of how startups have traditionally scaled can provide us with some contrast:
+This is where Haseeb's explanation of how startups have traditionally scaled can provide us with some contrast.
 
-#### If it's Slow --> What is Slow? --> Work Backwards to a Solution
+## If it's Slow --> What is Slow? --> Work Backwards to a Solution
+
+### Caching
+
+You're just starting out.  Maybe the site is at this point running on a machine you've got in your bedroom, things are catching on, and you are starting to notice that a piece of a page is very slow.  So far, you've not done anything to actually speed your site up.  What should you do?
+
+The first thing you should always try when you sense a scaling problem is caching.  Check to see if you have a complex database query which can be cached.  The logic behind this approach is that databases are stored on hard drives, which are notoriously slow ...
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/speed-of-operations.png" />
+</p>
+
+(that table comes from http://norvig.com/21-days.html#answers)
+
+For the sake of understanding the table ...
+
+Mutex:
+
+> "In computer programming, a mutex [mutual exclusion] is a program object that allows multiple program threads to share the same resource, such as file access, but not simultaneously. When a program is started, a mutex is created with a unique name." (http://www.webopedia.com/TERM/M/mutex.html)
+
+L1 / L2:
+
+> "Cache memory is a special memory used by the CPU (Central Processing Unit) of a computer for the purpose of decreasing the average time required to access memory. Cache memory is a relatively smaller and also a faster memory, which stores most frequently accessed data of the main memory. When there is request for a memory read, cache memory is checked to see whether that data exists in cache memory. If that data is in the cache memory, then there is no need to access the main memory (which takes longer time to be accessed), therefore making the average memory access time smaller. Typically, there are separate caches for data and instructions. Data cache is typically set up in a hierarchy of cache levels (sometimes called multilevel caches). L1 (Level 1) and L2 (Level 2) are the top most caches in this hierarchy of caches. L1 is the closest cache to the main memory and is the cache that is checked first. L2 cache is the next in line and is the second closest to main memory. L1 and L2 vary in access speeds, location, size and cost." (http://www.differencebetween.com/difference-between-l1-and-vs-l2-cache/)
+
+Branch misdirection:
+
+> "Branch misprediction occurs when a central processing unit (CPU) mispredicts the next instruction to process in branch prediction, which is aimed at speeding up execution." (https://en.wikipedia.org/wiki/Branch_misprediction)
+
+The important part of that is to notice just how much faster retrieving something from a cache can be compared to network and disk requests.
+
+There are many ways to cache something, but two are worth mentioning here:
+
+*Fragment Caching:* This is more than just caching the data.  It's saving a giant string with rendered HTML and CSS.
+
+*HTTP Caching:* Every time you get a page, the HTTP headers contain a version number that informs the server of the last time you visited the site.  If the page has not since changed, the server says no, your version is updated, and you serve the page to yourself, based on what you last saw.
+
+### Blocking
+
+Something on your page is slow again, and it seems to happen when new data appears on the page.  This can happen if you're using something like PHP, but would be much less likely to occur on a Node backend.  It seems that nothing can happen while you wait for this new data to appear on your page.
+
+You've got a blocking thread.
+
+Your backend I/O accesses need to be asynchronous, non-blocking.  What that means is that when you make a request to your (unavoidably slow) disk, your server does not sit there and wait for the response.  It instead simply registers a callback in a queue of asynchronous callbacks.
+
+This is a bit like saying, _"We're working on that, you go and do your thing, and I'll get back to you when the data is ready."_
+
+Node.js comes with this ability baked in.  All network and disk accesses are today handled with what are called promises ...
+
+```
+new Promise((resolve, reject) => {
+    request(url, (err, response) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(response);
+        }
+    });
+});
+```
+
+### CPU / Memory Usage Really High
 
