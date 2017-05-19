@@ -42,23 +42,17 @@ To illustrate in a really vague manner the type of situation we have with "syste
 
 #### Infrastructure as a Service (IaaS) aka Virtual Machines
 
-```
-"IaaS - Infrastructure as a Service is one of the big three models of cloud computing and operates by providing virtualized hardware as a resource. This means that there is no single server or other piece of hardware that does the required work. Requests are filled using parts of actual hardware across a number of networks." (_AWS Lambda_ by Darryl Barton)
-```
+`"IaaS - Infrastructure as a Service is one of the big three models of cloud computing and operates by providing virtualized hardware as a resource. This means that there is no single server or other piece of hardware that does the required work. Requests are filled using parts of actual hardware across a number of networks." (_AWS Lambda_ by Darryl Barton)`
 
 - Best example: Amazon Web Services (AWS)
 - Can be a lot of work to setup, maintain and debug due to high complexity
 - Was created before the introduction of the auto-scaling concept:
 
-```
-"Amazon Web Services launched the Amazon Elastic Compute Cloud (EC2) service in August 2006, that allowed developers to programmatically create and terminate instances (machines). At the time of initial launch, AWS did not offer autoscaling, but the ability to programmatically create and terminate instances gave developers the flexibility to write their own code for autoscaling."_ (wikipedia)
-```
+`"Amazon Web Services launched the Amazon Elastic Compute Cloud (EC2) service in August 2006, that allowed developers to programmatically create and terminate instances (machines). At the time of initial launch, AWS did not offer autoscaling, but the ability to programmatically create and terminate instances gave developers the flexibility to write their own code for autoscaling."_ (wikipedia)`
 
 #### Platform as a Service (PaaS)
 
-```
-"PaaS - Platform as a Service provides hardware and software to users so that they don't have to maintain the cumbersome hardware infrastructure themselves in order to develop new applications." (_AWS Lambda_ by Darryl Barton)
-```
+`"PaaS - Platform as a Service provides hardware and software to users so that they don't have to maintain the cumbersome hardware infrastructure themselves in order to develop new applications." (_AWS Lambda_ by Darryl Barton)`
 
 - Best example: Heroku
 - Easier to setup and use, manages most of the hard stuff for you
@@ -68,9 +62,7 @@ To illustrate in a really vague manner the type of situation we have with "syste
 
 #### Serverless
 
-```
-Serverless - 
-```
+`Serverless - `
 
 ### The Content Deliver Network (CDN)
 
