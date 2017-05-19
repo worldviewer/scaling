@@ -184,18 +184,37 @@ Making matters worse, you're now going to need load balancers to evenly distribu
 
 ### Globalization
 
-Your site is slow again.  But, this time, it's a latency problem.  Some geographic regions are worse than others.
+Your site is slow again.  But, this time, it's a latency problem, and some geographic regions are worse than others.
 
 The solution is of course globalization; you need horizontal scaling that is geographically targeted.
-
-The thing to know about this is that you may be able to get away with compartmentalizing the problem.  A case-in-point is Algolia Search.  What you do is you upload the data which needs searching to their servers, and that data is then distributed to their global network.  This is a great solution for search because it enables autocompletion to work regardless of where on the planet the user is searching from.
 
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/algolia-global-latency.png" />
 </p>
 
+The thing to know about this is that you may be able to get away with compartmentalizing the problem.  A case-in-point is Algolia Search.  What you do is you upload the data which needs searching to their servers, and that data is then distributed to _their_ global network.  This is a great low-cost solution for search because it enables autocompletion to work regardless of where on the planet the user is searching from.
+
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/autocompletion.gif" />
 </p>
 
-The point with globalization is that you should not immediately jump to this idea that you need to place your entire app on servers that are spread throughout the world.  You should check if the speed problem can be compartmentalized to certain features.
+The point with globalization is that you should not immediately jump to this idea that you need to place your entire app on servers that are spread out over the world.  You should check if the solution can be specifically targeted to your bottleneck features.
+
+### Full-table Database Scans
+
+Your site is slow again, and this time it's your huge database.  Your monolithic database is buckling under the load.  Before you think about scaling it horizontally, you need to first optimize it to make sure that you are *never* doing a full-table scan of your huge database, which is a complete waste of time.
+
+A full-table scan is when your database searches have to check every single key before they find the record you are looking for.  This is what is called an O(n) complexity -- which in algorithm-speak translates to "really sucks".
+
+A better situation would be if your database search was able to rule out half of the records with each index it checked on its way to finding the one you want.  This is known as a sorted binary search tree.  Your search time would then reduce from O(n) to O(log n), a vast improvement when n is large.
+
+Notice how fast it would be, for instance, to get to 67 in the binary search tree below (3 steps).  If this was a table index, it would be the very last item (10 steps).
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/binary-search-tree.png" />
+</p>
+
+The trade-offs with this is that it takes up more space, and when you do an update, you now have to update two different things.  So, all of your writes are now slower.
+
+### Denormalize the Data
+
