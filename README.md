@@ -20,11 +20,9 @@ Of course, data also flows the other way -- like when a user creates a password,
 
 A diagram is helpful here:
 
-
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/mvc.jpg" />
 </p>
-
 
 The key word here is _monolithic_ because the user's computer -- the "client" -- is not really doing a whole lot, and most of the work is happening on servers which are to some extent dedicated to your site.
 
@@ -32,11 +30,9 @@ It's important to emphasize that these servers require _devops_ technicians (dev
 
 To illustrate in a really vague manner the type of situation we have with "systems" and "code" specialists, here is another diagram:
 
-
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/fullstack-venn-diagram.jpg" />
 </p>
-
 
 ### The Evolution of "Cloud" Deployments
 
@@ -67,13 +63,29 @@ To illustrate in a really vague manner the type of situation we have with "syste
 > Despite the name, it does not actually involve running code without servers. The name 'serverless computing' is used because the business or person that owns the system does not have to purchase, rent or provision servers or virtual machines for the back-end code to run on." (wikipedia)
 
 - Best example: AWS Lambda
-- Recent innovation (AWS Lambda launched in 2014), awareness still fairly low
-- Especially suited to deploying limited-scope "microservices" that can rapidly "spin up" from sleep, solve just one small problem, then just as quickly spin back down
-- The key innovations here are infinite scalability and a system of billing which enormously benefits lean startups due to super-low startup costs (without any real support from Amazon, the first million hits to your AWS Lambda endpoints are free)
-- Best if used in conjunction with the Serverless framework, which supports a simple Node-based wrapper and simplified deployment tools
+- A very recent innovation (AWS Lambda launched in 2014), awareness still fairly low
+- Especially suited to deploying limited-scope "microservices" that can rapidly "spin up" from sleep on demand to thousands of concurrent instances, solve just one small problem, then just as quickly spin back down
+- The key innovations here are *infinite scalability* (baked in from the start!) and a system of *billing* which enormously benefits lean startups (if the support plan is removed from the subscription, the first million hits to your AWS Lambda endpoints are free), providing the startup with ample time to achieve profitability
+- Best if used in conjunction with the Serverless framework (https://serverless.com/), which supports a simple Node-based wrapper and simplified deployment tools to accomplish a wide variety of backend tasks
+- Low complexity (any Node developer should be able to figure this stuff out, even junior Node dev's)
+- No "operations" experience required as with virtual machines -- just developers
+
+There is one more acronym you really need to know ...
 
 ### The Content Deliver Network (CDN)
 
-The Most Important Thing to Know:
-If it's Slow --> What is Slow? --> Work Backwards to a Solution
+- Good at shoveling data (static content like code and images)
+- Tons of locations, globally accessible
+- Faster than AWS
+- Never serve assets from your own servers (this creates high _latency_, which is delay to page render)
+
+### The Traditional Scaling Process
+
+Now, it's one thing to say, _"Hey, look at this new shiny thing. Isn't it pretty?"_, but to truly get why it's so great, we really need historical context.  We must ask: _What is so bad about the old way of scaling?_
+
+We must also take the time to understand: _What are the risks, or downsides, to adopting this new technology?_
+
+This is where Haseeb's explanation of how startups have traditionally scaled can provide us with some contrast:
+
+#### If it's Slow --> What is Slow? --> Work Backwards to a Solution
 
