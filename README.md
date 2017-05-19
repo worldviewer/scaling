@@ -48,7 +48,7 @@ To illustrate in a really vague manner the type of situation we have with "syste
 - Can be a lot of work to setup, maintain and debug due to high complexity
 - Was created before the introduction of the auto-scaling concept:
 
-> "Amazon Web Services launched the Amazon Elastic Compute Cloud (EC2) service in August 2006, that allowed developers to programmatically create and terminate instances (machines). At the time of initial launch, AWS did not offer autoscaling, but the ability to programmatically create and terminate instances gave developers the flexibility to write their own code for autoscaling."_ (wikipedia)
+> "Amazon Web Services launched the Amazon Elastic Compute Cloud (EC2) service in August 2006, that allowed developers to programmatically create and terminate instances (machines). At the time of initial launch, AWS did not offer autoscaling, but the ability to programmatically create and terminate instances gave developers the flexibility to write their own code for autoscaling." (wikipedia)
 
 #### Platform as a Service (PaaS)
 
@@ -56,13 +56,21 @@ To illustrate in a really vague manner the type of situation we have with "syste
 
 - Best example: Heroku
 - Easier to setup and use, manages most of the hard stuff for you
-- Like IaaS, didn't start out with auto-scaling, but has evolved into it
+- Like IaaS, didn't start out with auto-scaling, but is evolving into it
 - Pre-packaged configurations, reducing complexity
 - Can be more expensive than IaaS
 
-#### Serverless
+#### Serverless, aka Function as a Service (FaaS)
 
-> Serverless - 
+> Serverless - "a cloud computing code execution model in which the cloud provider fully manages starting and stopping of a function's container platform as a service (PaaS) as necessary to serve requests, and requests are billed by an abstract measure of the resources required to satisfy the request, rather than per virtual machine, per hour.
+
+> Despite the name, it does not actually involve running code without servers. The name 'serverless computing' is used because the business or person that owns the system does not have to purchase, rent or provision servers or virtual machines for the back-end code to run on." (wikipedia)
+
+- Best example: AWS Lambda
+- Recent innovation (AWS Lambda launched in 2014), awareness still fairly low
+- Especially suited to deploying limited-scope "microservices" that can rapidly "spin up" from sleep, solve just one small problem, then just as quickly spin back down
+- The key innovations here are infinite scalability and a system of billing which enormously benefits lean startups due to super-low startup costs (without any real support from Amazon, the first million hits to your AWS Lambda endpoints are free)
+- Best if used in conjunction with the Serverless framework, which supports a simple Node-based wrapper and simplified deployment tools
 
 ### The Content Deliver Network (CDN)
 
