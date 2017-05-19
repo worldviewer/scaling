@@ -167,7 +167,7 @@ Your site is slow again.  This time, you can tell that your server is pegged.  W
 You're starting to enter dangerous territory at this point known as "operations" ("devops").  The risk you face is that the complexity of your system is about to drastically increase.  You should do everything you can to avoid that: Put simply, you should buy a better server.  Don't scale horizontally until you absolutely have to.
 
 <p align="center">
-        <img src="https://github.com/worldviewer/scaling/blob/master/img/horizontal-vs-vertical-scaling.jpg" />
+        <img src="https://github.com/worldviewer/scaling/blob/master/img/horizontal-vs-vertical-scaling.png" />
 </p>
 
 Horizontal scaling is complex and expensive.  To make it work, all of your application servers must be _stateless_.  In other words, every single request is like a blank slate, because there's no real guarantee that the same machine handled the last client interaction.  All of your state is going to have to exist in either your database or your cache.
@@ -175,7 +175,7 @@ Horizontal scaling is complex and expensive.  To make it work, all of your appli
 Making matters worse, you're now going to need load balancers to evenly distribute the incoming requests.  All of this added complexity creates more failure points.  Things are going to start breaking.
 
 <p align="center">
-        <img src="https://github.com/worldviewer/scaling/blob/master/img/load-balancing.jpg" />
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/load-balancing.png" />
 </p>
 
 > "Your centralized load balancer secretly hates you. You just haven't realized it yet ...
