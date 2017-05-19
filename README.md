@@ -20,7 +20,9 @@ Of course, data also flows the other way -- like when a user creates a password,
 
 A diagram is helpful here:
 
-
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/mvc.jpg" />
+</p>
 
 ### Infrastructure as a Service
 
