@@ -101,10 +101,10 @@ You're just starting out.  Maybe the site is at this point running on a machine 
 The first thing you should always try when you sense a scaling problem is caching.  Check to see if you have a complex database query which can be cached.  The logic behind this approach is that databases are stored on hard drives, which are notoriously slow ...
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/speed-of-operations.png" />
+    <a href="http://norvig.com/21-days.html#answers">
+        <img src="https://github.com/worldviewer/scaling/blob/master/img/speed-of-operations.png" />
+    </a>
 </p>
-
-(that table comes from http://norvig.com/21-days.html#answers)
 
 For the sake of understanding the table ...
 
@@ -140,7 +140,7 @@ This is a bit like saying, _"We're working on that, you go and do your thing, an
 
 Node.js comes with this ability baked in.  All network and disk accesses are today handled with what are called promises ...
 
-```
+```javascript
 new Promise((resolve, reject) => {
     request(url, (err, response) => {
         if (err) {
