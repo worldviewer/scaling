@@ -74,6 +74,10 @@ There is one more acronym you really need to know ...
 
 ### The Content Deliver Network (CDN)
 
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/cdn.png" />
+</p>
+
 - Good at shoveling data (static content like code and images)
 - Tons of locations, globally accessible
 - Faster than AWS
