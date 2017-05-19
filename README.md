@@ -8,13 +8,15 @@ People will of course differ on the best way to solve this complex problem, and 
 
 ### The Monolithic MVC Architecture
 
-M = Model
-V = View
-C = Controller
+- **M** = Model
+- **V** = View
+- **C** = Controller
 
-A model is a specification for retrieving data from a source like a database.  A view is a webpage -- sometimes called a template -- which combines static and dynamic content.  Static content is of course the content which never changes, whereas dynamic content is the reason we need a model.  It's the stuff on a page that changes from one user or product to the next.
+A _model_ is a specification for retrieving data from a source like a database.  A _view_ is a webpage -- sometimes called a _template_ -- which combines static and dynamic content.  _Static_ content is of course the content which never changes from one request to another, whereas _dynamic_ content is the reason we need a model; it's the stuff on a page that changes from one user or product to the next.
 
-A controller is the logic which handles interactions with the client (the user's computer), and which acts as the glue that runs the whole show.  In the traditional MVC arcitecture (as you'd see with something like PHP), this controller exists on a server -- the "website".  It transforms incoming requests for webpages into outgoing pages by determining what data is needed, fetching it through the model layer, and then rendering the view with that data back to the client.
+A _controller_ is the logic which handles interactions with the client (the user's computer), and which acts as the glue that runs the whole show.  In the traditional MVC architecture (as you'd see with something like PHP), this controller generally exists on a server -- the "website".  It transforms incoming requests for webpages into outgoing pages by determining what data is needed, fetching that data through the model layer, and then rendering the view embedded with that data back to the client.
+
+Of course, data also flows the other way -- like when a user creates a password, when they submit a form with data, or when they upload a file.  In all of those cases, the model layer is used to write data _into_ the database.
 
 A diagram is helpful here:
 
