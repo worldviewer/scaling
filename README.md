@@ -182,3 +182,20 @@ Making matters worse, you're now going to need load balancers to evenly distribu
 
 > Lets rip off the band aid: It might work well enough for brochureware, but for web-based applications, centralized load balancing is just a dumb idea. It started out as a hack to make a bunch of servers look like one server; a workaround for the fact that HTTP and the web wasn't designed for modern applications. It's an unnecessary middleman and a bottleneck. It forces you toward certain [structures] that are not suitable for the modern web. It doesn't like you, and it doesn't like your friends." (http://abnorman.com/rantings/2014/7/28/unbalanced)
 
+### Globalization
+
+Your site is slow again.  But, this time, it's a latency problem.  Some geographic regions are worse than others.
+
+The solution is of course globalization; you need horizontal scaling that is geographically targeted.
+
+The thing to know about this is that you may be able to get away with compartmentalizing the problem.  A case-in-point is Algolia Search.  What you do is you upload the data which needs searching to their servers, and that data is then distributed to their global network.  This is a great solution for search because it enables autocompletion to work regardless of where on the planet the user is searching from.
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/algolia-global-latency.png" />
+</p>
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/autocompletion.gif" />
+</p>
+
+The point with globalization is that you should not immediately jump to this idea that you need to place your entire app on servers that are spread throughout the world.  You should check if the speed problem can be compartmentalized to certain features.
