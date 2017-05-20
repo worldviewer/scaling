@@ -230,7 +230,7 @@ What these two quotes should show is that there is a trade-off here between redu
 The graphic below demonstrates the process; notice in the bottom half that data is being taken from one table and inserted into another, in order to reduce the number of hops from two to one.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/denormalization.png" />
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/denormalization.jpg" />
 </p>
 
 The downside of this process is that it is risky.  If something goes wrong in the process, the data can become inconsistent.
