@@ -2,7 +2,7 @@
 
 The following advice on scaling comes from a brilliant Airbnb engineer (and former world-class poker player), Haseeb Qureshi.  A lot of this knowledge is born of hard knocks experiences which you do not necessarily want to personally experience.  And although some people might call these "problems you want to have", IMO they can be fairly interpreted as a lesson to keep an eye out for something better.
 
-People will of course differ on the best way to solve this complex problem, and CEO's and CTO's would be wise to hear out all opinions.  The important part is that anybody who is trying to create a technology startup should understand at a high level the reasoning at any particular moment that justifies their _why_ and _how_ for addressing the scaling problem.  It is arguably one of the most fundamental issues which any startup that does not have access to incredible funding will face -- and adding to the danger is the fact that _*the early decisions about what tech stack to go with will commit most startups to this sequence of events.*_
+People will of course differ on the best way to solve this complex problem, and CEO's and CTO's would be wise to hear out all opinions.  The important part is that anybody who is trying to create a technology startup should understand at a high level the reasoning at any particular moment that justifies their _why_ and _how_ for addressing the scaling problem.  It is arguably one of the most fundamental issues which any startup that does not have access to incredible funding will face -- and adding to the danger is the fact that **the early decisions about what tech stack to go with will commit most startups to this sequence of events.**
 
 Part of the intention of this document is to wonder aloud if this is all really necessary.  Is this really the best we can do?
 
@@ -273,3 +273,49 @@ This is great because most apps have very high ratios of read-to-writes.  But, o
 
 ### Distributed or Sharded Database
 
+Take the leader-follower model, and now create leaders for each geographic region.
+
+> "A database shard is a horizontal partition of data in a database or search engine. Each individual partition is referred to as a shard or database shard. Each shard is held on a separate database server instance, to spread load.
+
+> Some data within a database remains present in all shards,[notes 1] but some appears only in a single shard. Each shard (or server) acts as the single source for this subset of data." (wikipedia)
+
+https://www.atlantic.net/blog/why-a-distributed-database-is-used-and-types-of-distributed-data/
+
+> Why are distributed databases becoming so popular?
+> May 25, 2014 by Adnan Raja
+
+> Many companies have left behind centralized databases in favor of distributed databases (in which the database, as its name implies, is distributed throughout an array of servers in various locations), for a variety of reasons. Let’s look at some of the basic advantages of distributed databases, a typical scenario in which they are used, and the different formats in which data is distributed throughout the system.
+
+> Why distributed databases are becoming increasingly popular
+
+> Here are the basic reasons why the centralized model is being left behind by many organizations in favor of database distribution:
+
+> Reliability – Building an infrastructure is similar to investing: diversify to reduce your chances of loss. Specifically, if a failure occurs in one area of the distribution, the entire database does not experience a setback.
+
+> Security – You can give permissions to single sections of the overall database, for better internal and external protection.
+
+> Cost-effective – Bandwidth prices go down because users are accessing remote data less frequently.
+
+> Local access – Similarly to #1 above, if there is a failure in the umbrella network, you can still get access to your portion of the database.
+
+> Growth – If you add a new location to your business, it’s simple to create an additional node within the database, making distribution highly scalable.
+
+> Speed & resource efficiency – Most requests and other interactivity with the database are performed at a local level, also decreasing remote traffic.
+
+> Responsibility & containment – Because any glitches or failures occur locally, the issue is contained and can potentially be handled by the IT staff designated to handle that piece of the company ...
+
+What they're not telling you is that this introduces significant complexity into the system.  This stuff is not easy to implement, and debugging becomes very tricky.
+
+### There are Too Many Developers Touching the Same Code
+
+When you've got multiple developers working on the same code -- like with a monolithic codebase -- you get merge conflicts.  This can slow down development and act as a vector for error, and it's one of the reasons that companies break up their codebase into microservices.
+
+In an ecosystem of microservices, each service has its own database and there is no single point of failure.  But, if dependencies exist between them, failures can propagate through them.
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/microservices.png" />
+</p>
+
+You might think it makes sense to start a codebase as microservices rather than slowly evolving into the paradigm, but it's not necessarily the case that it's understood early on how such a split system should be architected.
+
+One approach to microservices is to use it as a targeted process for addressing system bottlenecks.
