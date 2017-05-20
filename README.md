@@ -341,7 +341,7 @@ In other words, Pokemon Go owes much of its success to its upfront architectural
 
 https://specify.io/concepts/serverless-architecture
 
-> "Purpose 1: Lower Operations Costs
+> *"Purpose 1: Lower Operations Costs*
 
 > The services in a microservice architecture are always running. In fact, often there is more than one instance running of each service in order to achieve height availability. In a serverless architecture nothing runs when no event occurs. The platform which hosts the functions takes care to execute them only when necessary. And regarding to the pay-as-you-go principle you don’t have to pay if nothing is executed.
 
@@ -357,7 +357,7 @@ https://specify.io/concepts/serverless-architecture
 
 > It’s obvious that serverless computing is very effective regarding the resource usage when operating such a solution.
 
-> Purpose 2: Reduce Time to Market
+> *Purpose 2: Reduce Time to Market*
 
 > Another motivation to build serverless architectures is a faster development and deployment cycle. This is achieved because of the following reasons:
 
@@ -368,13 +368,13 @@ Each function should cover a clear defined responsibility. This leads to very sm
 
 > The platforms to operate serverless architectures takes care of all the operating stuff. The developers just have to upload the code and get direct feedback how the code behave in production.
 
-> Risk 1: Vendor Lock-In
+> *Risk 1: Vendor Lock-In*
 
 > At the moment, platforms to host serverless architectures are mainly provided by big players. AWS Lambda to name the top dog. To run a system on AWS lambda you must use very AWS specific services (Amazon API Gateway, DynamoDB, S3, etc.). Once you developed a complex system on top of these services you are cursed to stick with AWS, no matter how often they decide to increase their prices.
 
 > Running your own platform to operate a serverless architecture is pointless because, in most cases, the overhead will be much higher then the savings.
 
-> Risk 2: Complexity and Low Cohesion
+> *Risk 2: Complexity and Low Cohesion*
 
 > For decades, software engineers strove for height cohesion and less complexity. Domain driven design and microservices are a perfect match because they summarize the experience how to group related functionality.
 
