@@ -261,9 +261,13 @@ When you change your search data, how does this fresh data get to all of those o
 
 They let you upload your data to the nearest server, and that fresh data then propagates to all of the others.
 
-That is called a fully-distributed database (which we'll get to in a moment).  The leader-follower replication model is sort of like that, except it is unidirectional.  Writes always go to the same leader machine, but that information then distributes to an array of machines which service reads.
+That is called a fully-distributed database (which we'll get to in a moment).  The leader-follower replication model is sort of like that, except it centralizes writes into one machine.  Writes always go to the same leader machine, but that information then distributes to an array of machines which service reads.
 
-This is great because most apps have very high ratios of read-to-writes.  The leader-follower replication model sometimes doesn't work -- like if you have a write-heavy load.
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/leader-follower.png" />
+</p>
+
+This is great because most apps have very high ratios of read-to-writes.  But, of course, the leader-follower replication model sometimes doesn't work -- like if you have a write-heavy load.
 
 ### Distributed or Sharded Database
 
