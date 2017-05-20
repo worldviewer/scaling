@@ -222,19 +222,48 @@ The trade-offs with this is that it takes up more space, and when you do an upda
 
 > Database Normalization, or simply normalization, is the process of organizing the columns (attributes) and tables (relations) of a relational database to reduce data redundancy and improve data integrity. (wikipedia)
 
-What these two quotes should show is that there is a trade-off here between reduced data redundancy and speed-of-access.
+What they're saying is that joins are bad.  Imagine you spent all of this time finding the right key in yor database table only to be referenced to yet _another_ table, and the process repeats some number of times.  These sorts of things aren't planned; they might slip into the architecture as new features are built out.
 
-- *Normalized* = reduced redundancy, high data integrity, requires table joins to get to the data you want, slow
-- *Denormalized* - faster
-
-The graphic below demonstrates the process; notice in the bottom half that data is being taken from one table and inserted into another, in order to reduce the number of hops from two to one.
+The graphic below demonstrates the process; notice in the bottom half that data is being taken from one table and inserted into another, reducing the number of hops from two to one.
 
 <p align="center">
     <img src="https://github.com/worldviewer/scaling/blob/master/img/denormalization.jpg" />
 </p>
 
-The downside of this process is that it is risky.  If something goes wrong in the process, the data can become inconsistent.
+The downside of this process is that it is a risky transformation.  If something goes wrong in the process, the data can become inconsistent.  You better hope that the problem is apparent before new data starts going into that corrupted database, or it's game over.
 
-Worst case scenario.
+### Expensive SQL Queries (aka N+1 Queries)
 
-### 
+Your site is slow.  And it's the database again.  And in the process of talking it through, you realize that your junior developer has placed a SQL query inside of a loop.
+
+You are sending a shit-train of queries when you could just write one.  The train of requests is overwhelming your database.
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/n-plus-1-query-problem.jpg" />
+</p>
+
+```javascript
+// bad
+User.friends().forEach(friend => {
+    friend.getFromDatabase();
+});
+```
+
+### Horizontal Database Scaling
+
+Recall the Algolia example.
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/algolia-global-latency.png" />
+</p>
+
+When you change your search data, how does this fresh data get to all of those other geographical endpoints?
+
+They let you upload your data to the nearest server, and that fresh data then propagates to all of the others.
+
+That is called a fully-distributed database (which we'll get to in a moment).  The leader-follower replication model is sort of like that, except it is unidirectional.  Writes always go to the same leader machine, but that information then distributes to an array of machines which service reads.
+
+This is great because most apps have very high ratios of read-to-writes.  The leader-follower replication model sometimes doesn't work -- like if you have a write-heavy load.
+
+### Distributed or Sharded Database
+
