@@ -160,7 +160,7 @@ new Promise((resolve, reject) => {
 });
 ```
 
-### CPU / Memory Usage Really High
+### The CPU / Memory Usage is Too Damn High
 
 Your site is slow again.  This time, you can tell that your server is pegged.  What do you do?
 
@@ -216,5 +216,25 @@ Notice how fast it would be, for instance, to get to 67 in the binary search tre
 
 The trade-offs with this is that it takes up more space, and when you do an update, you now have to update two different things.  So, all of your writes are now slower.
 
-### Denormalize the Data
+### Denormalizing the Data
 
+> "The root cause of 99% of database performance problems is poorly written SQL code. Quite often poorly designed SQL code can be the result of an inappropriate underlying table structure. The table structure may be over Normalized forcing SQL code to join many tables to find a single item of information." (http://oracledba.ezpowell.com/oracle/papers/Denormalization.htm)
+
+> Database Normalization, or simply normalization, is the process of organizing the columns (attributes) and tables (relations) of a relational database to reduce data redundancy and improve data integrity. (wikipedia)
+
+What these two quotes should show is that there is a trade-off here between reduced data redundancy and speed-of-access.
+
+- *Normalized* = reduced redundancy, high data integrity, requires table joins to get to the data you want, slow
+- *Denormalized* - faster
+
+The graphic below demonstrates the process; notice in the bottom half that data is being taken from one table and inserted into another, in order to reduce the number of hops from two to one.
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/denormalization.png" />
+</p>
+
+The downside of this process is that it is risky.  If something goes wrong in the process, the data can become inconsistent.
+
+Worst case scenario.
+
+### 
