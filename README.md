@@ -330,3 +330,54 @@ One approach to microservices is to use it as a targeted process for addressing 
 > "Within 15 minutes of launching in Australia and New Zealand, player traffic surged well past Niantic’s expectations. This was the first indication to Niantic’s product and engineering teams that they had something truly special on their hands ...
 
 > Pokémon GO is a mobile application that uses many services across Google Cloud, but Cloud Datastore became a direct proxy for the game’s overall popularity given its role as the game’s primary database for capturing the Pokémon game world. The graph opening this blog post tells the story: the teams targeted 1X player traffic, with a worst-case estimate of roughly 5X this target. Pokémon GO’s popularity quickly surged player traffic to 50X the initial target, ten times the worst-case estimate. In response, Google CRE seamlessly provisioned extra capacity on behalf of Niantic to stay well ahead of their record-setting growth ..." (http://www.dataarchitect.cloud/bringing-pokemon-go-to-life-on-google-cloud/)
+
+In other words, Pokemon Go owes much of its success to its upfront architectural decision to build a scalable serverless system.  Had they not done so, the story would have ended up very different.
+
+## The Serverless Approach: Benefits vs Risks
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/serverless.png" />
+</p>
+
+https://specify.io/concepts/serverless-architecture
+
+> "Purpose 1: Lower Operations Costs
+
+> The services in a microservice architecture are always running. In fact, often there is more than one instance running of each service in order to achieve height availability. In a serverless architecture nothing runs when no event occurs. The platform which hosts the functions takes care to execute them only when necessary. And regarding to the pay-as-you-go principle you don’t have to pay if nothing is executed.
+
+> Scaling and autoscaling is no problem in a serverless architecture. When workload increases the affected functions just gets executed more often (in parallel of course).
+
+> Elasticity configuration is also much more effective in a serverless architecture. Instead of saying:
+
+> 'I’m willing to pay for 3 GB memory, and then stop the autoscaling'
+
+> you now can say
+
+> 'I’m willing to pay for 30000 events of type X and 5000 events of type Y, then stop scaling'
+
+> It’s obvious that serverless computing is very effective regarding the resource usage when operating such a solution.
+
+> Purpose 2: Reduce Time to Market
+
+> Another motivation to build serverless architectures is a faster development and deployment cycle. This is achieved because of the following reasons:
+
+> The serverless architecture style motivates to use existing or third party services (e.g. Auth0 for authentication) to reduce the custom code [see, 01].
+Each function should cover a clear defined responsibility. This leads to very small code base for each function. Because the responsibilities are well defined, each function can be developed and deployed independently.
+
+> Because functions are small and have a clear responsibility the likelihood for reusing existing functions increases.
+
+> The platforms to operate serverless architectures takes care of all the operating stuff. The developers just have to upload the code and get direct feedback how the code behave in production.
+
+> Risk 1: Vendor Lock-In
+
+> At the moment, platforms to host serverless architectures are mainly provided by big players. AWS Lambda to name the top dog. To run a system on AWS lambda you must use very AWS specific services (Amazon API Gateway, DynamoDB, S3, etc.). Once you developed a complex system on top of these services you are cursed to stick with AWS, no matter how often they decide to increase their prices.
+
+> Running your own platform to operate a serverless architecture is pointless because, in most cases, the overhead will be much higher then the savings.
+
+> Risk 2: Complexity and Low Cohesion
+
+> For decades, software engineers strove for height cohesion and less complexity. Domain driven design and microservices are a perfect match because they summarize the experience how to group related functionality.
+
+> There is the risk that developer ignore those lessons when building serverless architectures and that they end up in a set of unmaintainable functions. In my opinion, serverless architecture tend to produce 'nanoservices' and requires more experienced engineers to get it right. See arnon.me for a defintion of nanoservices:
+
+> 'Nanoservice is an antipattern where a service is too fine-grained. A nanoservice is a service whose overhead (communications, maintenance, and so on) outweighs its utility'"
