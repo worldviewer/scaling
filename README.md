@@ -282,6 +282,7 @@ Take the leader-follower model, and now create leaders for each geographic regio
 https://www.atlantic.net/blog/why-a-distributed-database-is-used-and-types-of-distributed-data/
 
 > Why are distributed databases becoming so popular?
+
 > May 25, 2014 by Adnan Raja
 
 > Many companies have left behind centralized databases in favor of distributed databases (in which the database, as its name implies, is distributed throughout an array of servers in various locations), for a variety of reasons. Let’s look at some of the basic advantages of distributed databases, a typical scenario in which they are used, and the different formats in which data is distributed throughout the system.
@@ -319,3 +320,13 @@ In an ecosystem of microservices, each service has its own database and there is
 You might think it makes sense to start a codebase as microservices rather than slowly evolving into the paradigm, but it's not necessarily the case that it's understood early on how such a split system should be architected.
 
 One approach to microservices is to use it as a targeted process for addressing system bottlenecks.
+
+### The Story of Pokemon Go
+
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/pokemon-go.png" />
+</p>
+
+> "Within 15 minutes of launching in Australia and New Zealand, player traffic surged well past Niantic’s expectations. This was the first indication to Niantic’s product and engineering teams that they had something truly special on their hands ...
+
+> Pokémon GO is a mobile application that uses many services across Google Cloud, but Cloud Datastore became a direct proxy for the game’s overall popularity given its role as the game’s primary database for capturing the Pokémon game world. The graph opening this blog post tells the story: the teams targeted 1X player traffic, with a worst-case estimate of roughly 5X this target. Pokémon GO’s popularity quickly surged player traffic to 50X the initial target, ten times the worst-case estimate. In response, Google CRE seamlessly provisioned extra capacity on behalf of Niantic to stay well ahead of their record-setting growth ..." (http://www.dataarchitect.cloud/bringing-pokemon-go-to-life-on-google-cloud/)
