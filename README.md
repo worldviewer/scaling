@@ -38,7 +38,11 @@ To illustrate in a really vague manner the type of situation we have with "syste
 
 ### The Evolution of "Cloud" Deployments
 
-#### Infrastructure as a Service (IaaS) aka Virtual Machines
+<p align="center">
+    <img src="https://github.com/worldviewer/scaling/blob/master/img/pizza-as-a-service.jpg" />
+</p>
+
+#### Infrastructure as a Service (IaaS) aka Virtual Machines / Docker / "Container"
 
 > "IaaS - Infrastructure as a Service is one of the big three models of cloud computing and operates by providing virtualized hardware as a resource. This means that there is no single server or other piece of hardware that does the required work. Requests are filled using parts of actual hardware across a number of networks." (_AWS Lambda_ by Darryl Barton)
 
@@ -60,6 +64,8 @@ To illustrate in a really vague manner the type of situation we have with "syste
 
 #### Serverless, aka Function as a Service (FaaS)
 
+(This is not to be confused as Software as a Service (SaaS) shown in the pizza diagram above.)
+
 > Serverless - "a cloud computing code execution model in which the cloud provider fully manages starting and stopping of a function's container platform as a service (PaaS) as necessary to serve requests, and requests are billed by an abstract measure of the resources required to satisfy the request, rather than per virtual machine, per hour.
 
 > Despite the name, it does not actually involve running code without servers. The name 'serverless computing' is used because the business or person that owns the system does not have to purchase, rent or provision servers or virtual machines for the back-end code to run on." (wikipedia)
@@ -71,6 +77,14 @@ To illustrate in a really vague manner the type of situation we have with "syste
 - Best if used in conjunction with the Serverless framework (https://serverless.com/), which supports a simple Node-based wrapper and simplified deployment tools to accomplish a wide variety of backend tasks
 - Low complexity (any Node developer should be able to figure this stuff out, even junior Node dev's)
 - No "operations" experience required as with virtual machines -- just developers
+
+> "Initially, serverless meant developers did not have to care for setting up and administering the servers running their back-end applications. Not that there were no servers involved, but the back-end infrastructure was maintained by third party providers and the functionality needed was offered as services, covering databases, messaging, authentication, etc. This service infrastructure was usually called Backend-as-a-Service (BaaS) or Mobile Backend-as-a-service (MBaaS).
+
+> But Amazon took the serverless paradigm to another level when they announced AWS Lambda back in 2014, introducing a new system architecture for applications running in the cloud. There is no perpetual process running on a server and waiting for HTTP requests or API calls, but an event mechanism that triggers the execution of a piece of code, usually just a function, on one of AWS’ servers.
+
+> One does not have to consider the server when using this paradigm. All that matters is to write the piece of code to be executed when a certain event takes place. The cloud provider takes care of finding a server where the code is to run, and to scale up when necessary. The containers used to run these functions are decommissioned as soon as the execution ends. And the execution is metered in units of 100 ms, the user being charged only for the resources consumed when the code is run. Some have called this type of functionality Function-as-a-Service (FaaS), which is Yet-Another-as-a-Service (YAssS), one of many that have appeared since cloud computing made its debut.
+
+> Amazon is not the only FaaS provider. Others include Google Cloud Functions, Microsoft Azure Functions, IBM OpenWhisk with an open source implementation, Iron.io, and Webtask ..." (https://www.infoq.com/news/2016/06/faas-serverless-architecture)
 
 There is one more acronym you really need to know ...
 
@@ -359,3 +373,74 @@ Each function should cover a clear defined responsibility. This leads to very sm
 > There is the risk that developer ignore those lessons when building serverless architectures and that they end up in a set of unmaintainable functions. In my opinion, serverless architecture tend to produce 'nanoservices' and requires more experienced engineers to get it right. See arnon.me for a defintion of nanoservices:
 
 > 'Nanoservice is an antipattern where a service is too fine-grained. A nanoservice is a service whose overhead (communications, maintenance, and so on) outweighs its utility'"
+
+### "The expensive part is the guy that has to jump in there and maintain it"
+
+> "What are some of the biggest shifts & changes you've seen in the space?
+
+> Jared: Yeah. So I would say what's been quite interesting to us kind of seeing it from all over the board from startups to our internal stuff up to enterprise is that...and certainly there's some self-selection going on here but folks are coming to us and Docker [a virtual machine, aka "infrastructure as a service"] was hot for like a year maybe.
+
+> David: Yeah.
+
+> Jared: But we've really seen that trend somewhat skipped over. The companies that would have been willing to go to Docker in the first place are now coming to us and asking about Serverless and so the whole container trend has kind of gotten jumped over for rather the managed platforms that underlying [inaudible 00:05:25] container type engines but they're more interested in just throwing their code at a platform and saying like, 'Just run this in response to some event.' Right?
+
+> So that very much has been skipped over the whole container...orchestrating your own containers has been skipped over which is really interesting.
+
+> David: Yeah, why do you think that is? Just the...you know, I wanna build my app and not worry about the underlying pieces or...
+
+> Jared: I think it's vastly more compelling to just say, 'Look, here's my code.' And just run it in response to these particular events exactly when I need them at the scale that I need them at. I don't want to worry about the actual patching and management of my underlying containers or my underlying host systems and so that's something that's nontrivial...
+
+> what's the actual cost of running a server, right? So, the server, the compute cost is the cheap part. **The expensive part is the guy that has to jump in there and maintain it.** Even if you're doing it with Ansible or things like that. There're still the overhead of actually managing the OS and that kinda...in all of your daemons running on the OS. Your antivirus if you're doing that, your log aggregation. And then if you just jump to Serverless and say, 'Look, I don't care about all of that. Here's my code. Run that.'" (https://serverless.com/blog/serverless-air-episode-two/)
+
+### The Serverless Framework Makes it Easy
+
+This is what an actual microservice I've personally built looks like.  The code is remarkably compact:
+
+```javascript
+// Allow latest version of JavaScript (ES6)
+if (!global._babelPolyfill) {
+    require('babel-polyfill');
+}
+
+// This helps us to connect to the database
+let MongoClient = require('mongodb').MongoClient;
+
+// Our data
+const 
+    METACARDS = 'metacards';
+
+// The Lambda function
+module.exports.list = (event, context, callback) => {
+    // Connect to the database
+    MongoClient.connect(process.env.MLABDB, (connectError, db) => {
+        // Check for an error
+        if (connectError) { throw connectError; }
+
+        // The database query
+        db.collection(METACARDS)
+            .find()
+            .toArray((queryError, docs) => {
+
+            if (queryError) {
+                console.error(queryError);
+                callback(new Error('Couldn\'t fetch the metacard data.'));
+            } else {
+                // Create a response
+                const response = {
+                    statusCode: 200,
+                    body: docs
+                };
+
+                // Send the response
+                callback(null, response);
+            }
+
+            // Close the database
+            db.close();
+
+            // Return the Lambda function
+            context.done();
+        });
+    });
+};
+```
