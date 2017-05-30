@@ -23,7 +23,7 @@ Of course, data also flows the other way -- like when a user creates a password,
 A diagram is helpful here:
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/mvc.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/mvc.jpg" />
 </p>
 
 The key word here is _monolithic_ because the user's computer -- the "client" -- is not really doing a whole lot, and most of the work is happening on servers which are to some extent dedicated to your site.
@@ -33,13 +33,13 @@ It's important to emphasize that these servers require _devops_ technicians (dev
 To illustrate in a really vague manner the type of situation we have with "systems" and "code" specialists, here is another diagram:
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/fullstack-venn-diagram.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/fullstack-venn-diagram.jpg" />
 </p>
 
 ### The Evolution of "Cloud" Deployments
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/pizza-as-a-service.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/pizza-as-a-service.jpg" />
 </p>
 
 #### Infrastructure as a Service (IaaS) aka Virtual Machines / Docker / "Container"
@@ -91,7 +91,7 @@ There is one more acronym you really need to know ...
 ### The Content Deliver Network (CDN)
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/cdn.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/cdn.png" />
 </p>
 
 - Serving assets from your own server (left) vs serving assets from a CDN (right)
@@ -118,7 +118,7 @@ The first thing you should always try when you sense a scaling problem is cachin
 
 <p align="center">
     <a href="http://norvig.com/21-days.html#answers">
-        <img src="https://github.com/worldviewer/scaling/blob/master/img/speed-of-operations.png" />
+        <img src="https://github.com/spaysays/scaling/blob/master/img/speed-of-operations.png" />
     </a>
 </p>
 
@@ -157,7 +157,7 @@ You've got a blocking thread.
 Your backend I/O accesses need to be asynchronous, non-blocking.  What that means is that when you make a request to your (unavoidably slow) disk, your server does not sit there and wait for the response.  It instead simply registers a callback in a queue of asynchronous callbacks.
 
 <p align="center">
-        <img src="https://github.com/worldviewer/scaling/blob/master/img/non-blocking.jpg" />
+        <img src="https://github.com/spaysays/scaling/blob/master/img/non-blocking.jpg" />
 </p>
 
 This is a bit like saying, _"We're working on that, you go and do your thing, and I'll get back to you when the data is ready."_
@@ -183,7 +183,7 @@ Your site is slow again.  This time, you can tell that your server is pegged.  W
 You're starting to enter dangerous territory at this point known as "operations" ("devops").  The risk you face is that the complexity of your system is about to drastically increase.  You should do everything you can to avoid that: Put simply, you should buy a better server.  Don't scale horizontally until you absolutely have to.
 
 <p align="center">
-        <img src="https://github.com/worldviewer/scaling/blob/master/img/horizontal-vs-vertical-scaling.png" />
+        <img src="https://github.com/spaysays/scaling/blob/master/img/horizontal-vs-vertical-scaling.png" />
 </p>
 
 Horizontal scaling is complex and expensive.  To make it work, all of your application servers must be _stateless_.  In other words, every single request is like a blank slate, because there's no real guarantee that the same machine handled the last client interaction.  All of your state is going to have to exist in either your database or your cache.
@@ -191,7 +191,7 @@ Horizontal scaling is complex and expensive.  To make it work, all of your appli
 Making matters worse, you're now going to need load balancers to evenly distribute the incoming requests.  All of this added complexity creates more failure points.  Things are going to start breaking.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/load-balancing.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/load-balancing.png" />
 </p>
 
 > "Your centralized load balancer secretly hates you. You just haven't realized it yet ...
@@ -205,13 +205,13 @@ Your site is slow again.  But, this time, it's a latency problem, and some geogr
 The solution is of course globalization; you need horizontal scaling that is geographically targeted.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/algolia-global-latency.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/algolia-global-latency.png" />
 </p>
 
 The thing to know about this is that you may be able to get away with compartmentalizing the problem.  A case-in-point is Algolia Search.  What you do is you upload the data which needs searching to their servers, and that data is then distributed to _their_ global network.  This is a great low-cost solution for search because it enables autocompletion to work regardless of where on the planet the user is searching from.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/autocompletion.gif" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/autocompletion.gif" />
 </p>
 
 The point with globalization is that you should not immediately jump to this idea that you need to place your entire app on servers that are spread out over the world.  You should check if the solution can be specifically targeted to your bottleneck features.
@@ -227,7 +227,7 @@ A better situation would be if your database search was able to rule out half of
 Notice how fast it would be, for instance, to get to 67 in the binary search tree below (3 steps).  If this was a table index, it would be the very last item (10 steps).
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/binary-search-tree.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/binary-search-tree.png" />
 </p>
 
 The trade-offs with this is that it takes up more space, and when you do an update, you now have to update two different things.  So, all of your writes are now slower.
@@ -243,7 +243,7 @@ What they're saying is that joins are bad.  Imagine you spent all of this time f
 The graphic below demonstrates the process; notice in the bottom half that data is being taken from one table and inserted into another, reducing the number of hops from two to one.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/denormalization.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/denormalization.jpg" />
 </p>
 
 The downside of this process is that it is a risky transformation.  If something goes wrong in the process, the data can become inconsistent.  You better hope that the problem is apparent before new data starts going into that corrupted database, or it's game over.
@@ -255,7 +255,7 @@ Your site is slow.  And it's the database again.  And in the process of talking 
 You are sending a shit-train of queries when you could just write one.  The train of requests is overwhelming your database.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/n-plus-1-query-problem.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/n-plus-1-query-problem.jpg" />
 </p>
 
 ```javascript
@@ -270,7 +270,7 @@ User.friends().forEach(friend => {
 Recall the Algolia example.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/algolia-global-latency.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/algolia-global-latency.png" />
 </p>
 
 When you change your search data, how does this fresh data get to all of those other geographical endpoints?
@@ -280,7 +280,7 @@ They let you upload your data to the nearest server, and that fresh data then pr
 That is called a fully-distributed database (which we'll get to in a moment).  The leader-follower replication model is sort of like that, except it centralizes writes into one machine.  Writes always go to the same leader machine, but that information then distributes to an array of machines which service reads.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/leader-follower.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/leader-follower.png" />
 </p>
 
 This is great because most apps have very high ratios of read-to-writes.  But, of course, the leader-follower replication model sometimes doesn't work -- like if you have a write-heavy load.
@@ -294,7 +294,7 @@ Take the leader-follower model, and now create leaders for each geographic regio
 > Some data within a database remains present in all shards,[notes 1] but some appears only in a single shard. Each shard (or server) acts as the single source for this subset of data." (wikipedia)
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/distributed-databases.jpg" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/distributed-databases.jpg" />
 </p>
 
 The downside is that this introduces significant complexity into the system.  This stuff is not easy to implement, and debugging becomes very tricky.
@@ -306,7 +306,7 @@ When you've got multiple developers working on the same code -- like with a mono
 In an ecosystem of microservices, each service has its own database and there is no single point of failure.  But, if dependencies exist between them, failures can propagate through them.
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/microservices.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/microservices.png" />
 </p>
 
 You might think it makes sense to start a codebase as microservices rather than slowly evolving into the paradigm, but it's not necessarily the case that it's understood early on how such a split system should be architected.
@@ -316,7 +316,7 @@ One approach to microservices is to use it as a targeted process for addressing 
 ### The Story of Pokemon Go
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/pokemon-go.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/pokemon-go.png" />
 </p>
 
 > "Within 15 minutes of launching in Australia and New Zealand, player traffic surged well past Niantic’s expectations. This was the first indication to Niantic’s product and engineering teams that they had something truly special on their hands ...
@@ -328,7 +328,7 @@ In other words, Pokemon Go owes much of its success to its upfront architectural
 ## The Serverless Approach: Benefits vs Risks
 
 <p align="center">
-    <img src="https://github.com/worldviewer/scaling/blob/master/img/serverless.png" />
+    <img src="https://github.com/spaysays/scaling/blob/master/img/serverless.png" />
 </p>
 
 https://specify.io/concepts/serverless-architecture
