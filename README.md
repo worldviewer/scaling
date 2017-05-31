@@ -447,7 +447,7 @@ module.exports.list = (event, context, callback) => {
 
 ### The Task at Hand: IaaS or FaaS for the Real-time Auction Data?
 
-There seem to be at least two ways to build out the auction portion of this system: With state in some sort of object or database store accessed through dedicated EC2 servers running at all times (the IaaS approach), or as a more stateless system (FaaS, Serverless approach) where perhaps some of the functionality is handled by another service (like handing Publish-Subscribe auction push functionality to PubNub).
+There seem to be at least two ways to build out the auction portion of this system: With dedicated EC2 servers running at all times (the IaaS approach), or as a less stateful system (FaaS, Serverless approach) where perhaps some of the functionality is handled by another service (like handing Publish-Subscribe auction push functionality to PubNub).
 
 What would be great would be to know, in advance, which of these options is the better approach -- in terms of the costs especially -- but also if the reliability and complexity of the FaaS approach is manageable.
 
